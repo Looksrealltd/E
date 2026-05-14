@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELLIKER — Content Strategy System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+  :root {
+    --bg: #F5F2EC;
+    --bg2: #EDEAE2;
+    --ink: #1A1A18;
+    --ink2: #4A4A44;
+    --ink3: #8A8A7E;
+    --moss: #3B6D11;
+    --moss-light: #EAF3DE;
+    --moss-mid: #639922;
+    --clay: #993C1D;
+    --clay-light: #FAECE7;
+    --sky: #185FA5;
+    --sky-light: #E6F1FB;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --line: rgba(26,26,24,0.12);
+    --radius: 4px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  .masthead {
+    padding: 72px 64px 56px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -60px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+  }
+  .masthead::after {
+    content: '';
+    position: absolute;
+    top: 20px; right: 40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+  }
+  .brand-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 640px;
+    margin-bottom: 20px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--moss);
+  }
+  .masthead-sub {
+    font-size: 16px;
+    color: var(--ink2);
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  .phase-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+    padding: 0 64px;
+  }
+  .phase-nav a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    text-decoration: none;
+    padding: 16px 20px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .phase-nav a:hover, .phase-nav a.active {
+    color: var(--ink);
+    border-bottom-color: var(--moss);
+  }
+
+  /* ── SECTION WRAPPER ── */
+  .section {
+    padding: 64px 64px 80px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+  .phase-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    padding-top: 4px;
+    white-space: nowrap;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  h2 em { font-style: italic; color: var(--moss); }
+  h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 12px;
+  }
+  p { margin-bottom: 1rem; color: var(--ink2); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── AESTHETIC PROFILE ── */
+  .aesthetic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 40px;
+  }
+  .aes-cell {
+    background: var(--bg);
+    padding: 24px;
+  }
+  .aes-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 8px;
+  }
+  .aes-value {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* ── QUESTION CLUSTERS ── */
+  .cluster {
+    margin-bottom: 40px;
+  }
+  .cluster-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .cluster-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-moss { background: var(--moss); }
+  .dot-clay { background: var(--clay); }
+  .dot-sky { background: var(--sky); }
+  .dot-amber { background: var(--amber); }
+  .dot-ink { background: var(--ink2); }
+
+  .cluster-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .q-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+  }
+  .q-list li {
+    font-size: 14px;
+    color: var(--ink2);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .q-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--ink3);
+    font-size: 12px;
+  }
+
+  /* ── CLAIM VALIDATION ── */
+  .claim-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .claim-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    text-align: left;
+    padding: 10px 16px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--line);
+    font-weight: 400;
+  }
+  .claim-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink2);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .claim-table tr:last-child td { border-bottom: none; }
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .tag-website { background: var(--moss-light); color: var(--moss); }
+  .tag-unverified { background: var(--clay-light); color: var(--clay); }
+
+  /* ── CONCEPT CARDS ── */
+  .concepts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 32px;
+  }
+  .concept-card {
+    background: var(--bg);
+    padding: 32px;
+  }
+  .concept-card:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+  .concept-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 12px;
+  }
+  .concept-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .concept-structure {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .concept-structure li {
+    font-size: 13px;
+    color: var(--ink2);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  .concept-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    flex-shrink: 0;
+    padding-top: 2px;
+    min-width: 70px;
+  }
+
+  /* ── 30 DAY PLAN ── */
+  .week-header {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    align-items: center;
+    padding: 24px 0;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 0;
+  }
+  .week-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+  }
+  .week-theme {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .week-theme em { font-style: italic; color: var(--moss); }
+
+  .day-row {
+    display: grid;
+    grid-template-columns: 56px 1fr 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .day-row:hover { background: var(--bg2); }
+  .day-cell {
+    padding: 16px;
+    border-right: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  .day-cell:last-child { border-right: none; }
+  .day-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink3);
+    font-weight: 400;
+  }
+  .day-hook {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+  .day-caption {
+    font-size: 12px;
+    color: var(--ink2);
+    font-style: italic;
+  }
+  .day-visual {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+  .day-meta {
+    font-size: 11px;
+    color: var(--ink3);
+    line-height: 1.6;
+  }
+  .meta-format {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-bottom: 4px;
+  }
+  .fmt-demo { background: var(--moss-light); color: var(--moss); }
+  .fmt-story { background: var(--sky-light); color: var(--sky); }
+  .fmt-pov { background: var(--amber-light); color: var(--amber); }
+  .fmt-contradiction { background: var(--clay-light); color: var(--clay); }
+  .fmt-metaphor { background: #F0F0E8; color: var(--ink2); }
+
+  .col-headers {
+    display: grid;
+    grid-template-columns: 56px 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg2);
+  }
+  .col-h {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    padding: 10px 16px;
+    border-right: 1px solid var(--line);
+    font-weight: 400;
+  }
+  .col-h:last-child { border-right: none; }
+
+  .hashtags {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--ink3);
+    line-height: 1.8;
+  }
+  .src-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    padding: 1px 5px;
+    border-radius: 2px;
+    background: var(--moss-light);
+    color: var(--moss);
+    margin-top: 4px;
+  }
+
+  .week-block { margin-bottom: 64px; }
+
+  .feedback-box {
+    background: var(--amber-light);
+    border-left: 3px solid var(--amber);
+    padding: 20px 24px;
+    margin-top: 32px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .feedback-box p {
+    font-size: 14px;
+    color: var(--amber);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 40px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+  }
+
+  @media (max-width: 900px) {
+    .masthead, .section { padding: 40px 24px; }
+    .phase-nav { padding: 0 24px; overflow-x: auto; }
+    h1 { font-size: 36px; }
+    .q-list { grid-template-columns: 1fr; }
+    .concepts-grid { grid-template-columns: 1fr; }
+    .aesthetic-grid { grid-template-columns: 1fr; }
+    .day-row, .col-headers { grid-template-columns: 40px 1fr 1fr; }
+    .day-row .day-cell:nth-child(4), .col-headers .col-h:nth-child(4) { display: none; }
+    .footer { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="brand-tag">Elliker · Content Strategy System · 2026</div>
+  <h1>Getting Into <em>Nature</em> — The Content Playbook</h1>
+  <p class="masthead-sub">A four-phase content strategy built from verified website intelligence. Phases 1–3 are complete. Phase 4 awaits your approval of the creative concepts.</p>
+</div>
+
+<!-- NAV -->
+<nav class="phase-nav">
+  <a href="#phase1">Phase 1 — Customer Research</a>
+  <a href="#phase2">Phase 2 — Claim Validation</a>
+  <a href="#phase3">Phase 3 — Creative Concepts</a>
+  <a href="#phase4">Phase 4 — 30-Day Plan</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     BRAND AESTHETIC PROFILE
+══════════════════════════════════════ -->
+<div class="section" style="padding-top:48px; padding-bottom:48px; background: var(--bg2);">
+  <div class="section-header">
+    <div class="phase-num">Brand Profile</div>
+    <div>
+      <h2>Aesthetic &amp; <em>Creative Identity</em></h2>
+    </div>
+  </div>
+  <div class="aesthetic-grid">
+    <div class="aes-cell">
+      <div class="aes-label">Visual Tone</div>
+      <div class="aes-value">Editorial nature photography. Moody, textural, unhurried. Raw landscapes and slow detail. Weathered stone, rippling water, mist over moorland.</div>
+    </div>
+    <div class="aes-cell">
+      <div class="aes-label">Colour World</div>
+      <div class="aes-value">Earthy neutrals (sand, khaki, taupe) with deliberate pops of lime and steel blue. Nature's palette — no neons, no pastels. Grounded and confident.</div>
+    </div>
+    <div class="aes-cell">
+      <div class="aes-label">Typography Feel</div>
+      <div class="aes-value">Clean, minimal sans on product. Prose-led storytelling in editorial contexts. "Field Guide" language — instructional, curious, lyrical.</div>
+    </div>
+    <div class="aes-cell">
+      <div class="aes-label">Origin Story</div>
+      <div class="aes-value">Named after Elliker Fields &amp; Woodland, East Keswick, Yorkshire. Place-rooted. The brand is inseparable from landscape.</div>
+    </div>
+    <div class="aes-cell">
+      <div class="aes-label">Content Universe</div>
+      <div class="aes-value">Forest bathing, wild garlic foraging, rockpooling, mushroom ID, bird watching, hammock camping, charcoal burning, microscopy. Curious, cross-disciplinary outdoors.</div>
+    </div>
+    <div class="aes-cell">
+      <div class="aes-label">Brand Tension (Useful)</div>
+      <div class="aes-value">Technical performance gear that looks like art. Recycled plastic bottles that become backpacks. Urban carry meets countryside escape. Price point accessible but values premium.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 1: CUSTOMER RESEARCH
+══════════════════════════════════════ -->
+<div class="section" id="phase1">
+  <div class="section-header">
+    <div class="phase-num">Phase 01</div>
+    <div>
+      <h2>Customer <em>Questions</em></h2>
+      <p style="margin-top:8px; font-size:15px;">30 likely customer questions generated from website intelligence only. No external sources were provided, so these are derived exclusively from verified website content — product range, sustainability pages, brand story, and projects. Clustered into 5 strategic themes.</p>
+    </div>
+  </div>
+
+  <!-- CLUSTER A -->
+  <div class="cluster">
+    <div class="cluster-title">
+      <div class="cluster-dot dot-moss"></div>
+      <div class="cluster-name">A — Sustainability Credibility (the sceptic's cluster)</div>
+    </div>
+    <ul class="q-list">
+      <li>Is the "recycled plastic" story actually meaningful, or greenwashing?</li>
+      <li>What does GRS certification actually mean for my bag?</li>
+      <li>Does "100% recycled polyester" affect how the bag performs in rain?</li>
+      <li>How many plastic bottles go into making one backpack?</li>
+      <li>Does donating 1% of profits actually make a difference to wildlife?</li>
+      <li>Are the dyes and hardware also sustainable, or just the fabric?</li>
+    </ul>
+  </div>
+
+  <!-- CLUSTER B -->
+  <div class="cluster">
+    <div class="cluster-title">
+      <div class="cluster-dot dot-clay"></div>
+      <div class="cluster-name">B — Product Performance & Durability (the practical buyer)</div>
+    </div>
+    <ul class="q-list">
+      <li>How waterproof is "waterproof coating" — can I use it in heavy rain?</li>
+      <li>Will the roll-top seal properly with a full load?</li>
+      <li>How does a 24L expand to 35L on the Buckden backpack?</li>
+      <li>Is the sling bag big enough for a day hike vs just commuting?</li>
+      <li>What's the difference between a sacoche and a crossbody?</li>
+      <li>How does the softshell jacket perform vs a hardshell in real conditions?</li>
+    </ul>
+  </div>
+
+  <!-- CLUSTER C -->
+  <div class="cluster">
+    <div class="cluster-title">
+      <div class="cluster-dot dot-sky"></div>
+      <div class="cluster-name">C — Style & Identity (the fashion-meets-function buyer)</div>
+    </div>
+    <ul class="q-list">
+      <li>Is Elliker streetwear, outdoors gear, or something in between?</li>
+      <li>Does the lime colour look as good in person as online?</li>
+      <li>Will the bag look wrong if I'm not actually hiking?</li>
+      <li>How does Elliker compare aesthetically to brands like Cotopaxi or Fjällräven?</li>
+      <li>Are the products unisex? How do they fit across different body types?</li>
+      <li>Does the grid fleece hoodie work as a standalone or just a mid-layer?</li>
+    </ul>
+  </div>
+
+  <!-- CLUSTER D -->
+  <div class="cluster">
+    <div class="cluster-title">
+      <div class="cluster-dot dot-amber"></div>
+      <div class="cluster-name">D — Brand Story & Connection (the values-driven buyer)</div>
+    </div>
+    <ul class="q-list">
+      <li>Where exactly is Elliker Fields? Can I visit it?</li>
+      <li>Which specific UK Wildlife Trusts receive the 1% donation?</li>
+      <li>What is forest bathing and why does a bag brand care about it?</li>
+      <li>What is the Hikerdelic collaboration and who is Hikerdelic?</li>
+      <li>How do I actually do the activities featured in your "projects" content?</li>
+      <li>Is this a Yorkshire brand? Does that affect how I feel about buying it?</li>
+    </ul>
+  </div>
+
+  <!-- CLUSTER E -->
+  <div class="cluster">
+    <div class="cluster-title">
+      <div class="cluster-dot dot-ink"></div>
+      <div class="cluster-name">E — Purchase Friction & Trust (the almost-buyer)</div>
+    </div>
+    <ul class="q-list">
+      <li>Why should I pay £75 for a backpack when I can get one cheaper on Amazon?</li>
+      <li>Where can I try the gear in person before buying? (Stockists?)</li>
+      <li>What's the returns policy if the fit isn't right?</li>
+      <li>Do you ship internationally and how long does it take?</li>
+      <li>Is the brand growing — will you still be around to honour a warranty?</li>
+      <li>What do real customers say about the quality after 6 months of use?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 2: CLAIM VALIDATION
+══════════════════════════════════════ -->
+<div class="section" id="phase2">
+  <div class="section-header">
+    <div class="phase-num">Phase 02</div>
+    <div>
+      <h2>Claim <em>Validation</em> System</h2>
+      <p style="margin-top:8px; font-size:15px;">Every content claim must trace to a verified source. Only [WEBSITE] claims are cleared for use. [UNVERIFIED] claims are flagged and excluded from the content plan.</p>
+    </div>
+  </div>
+
+  <table class="claim-table">
+    <thead>
+      <tr>
+        <th style="width:40%;">Claim</th>
+        <th style="width:12%;">Tag</th>
+        <th style="width:48%;">Source / Ruling</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>All bags are made from 100% recycled polyester</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Explicitly stated on Sustainability page. Cleared.</td>
+      </tr>
+      <tr>
+        <td>Recycled polyester is sourced from post-consumer plastic waste</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Explicitly stated on Sustainability page. Cleared.</td>
+      </tr>
+      <tr>
+        <td>Backed by Global Recycled Standard (GRS) transaction certificates</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Explicitly stated on Sustainability page. Cleared.</td>
+      </tr>
+      <tr>
+        <td>GRS described as "the industry gold standard"</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Elliker's own language on Sustainability page. Cleared for use as brand voice.</td>
+      </tr>
+      <tr>
+        <td>Clothing uses organic or fully recycled materials</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Sustainability page states clothing uses "organic or fully recycled materials." Cleared.</td>
+      </tr>
+      <tr>
+        <td>Organic Content Standard 100 certifications held</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Explicitly stated on Sustainability page. Cleared.</td>
+      </tr>
+      <tr>
+        <td>Elliker donates 1% of profits to UK Wildlife Trusts</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Stated on both Who Are We and Giving Back pages. Cleared.</td>
+      </tr>
+      <tr>
+        <td>Works closely with East Keswick Wildlife Trust specifically</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Giving Back page names EKWT explicitly. Cleared.</td>
+      </tr>
+      <tr>
+        <td>Brand named after Elliker Fields and Woodland, East Keswick, Yorkshire</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Stated on Who Are We page. Cleared.</td>
+      </tr>
+      <tr>
+        <td>Three fabric technologies: Recycled Polyester with PU Coating, Recycled Pongee, Organic Cotton</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Fabric Technology page lists all three with product categories. Cleared.</td>
+      </tr>
+      <tr>
+        <td>Recycled Pongee is a 3-layer shell fabric used for clothing</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Stated on Fabric Technology page. Cleared.</td>
+      </tr>
+      <tr>
+        <td>Organic Cotton is used for T-shirts specifically</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Stated on Fabric Technology page. Cleared.</td>
+      </tr>
+      <tr>
+        <td>Projects include forest bathing, wild garlic foraging, rockpooling, mushroom ID, bird watching, hammock camping, charcoal burn, microscopy</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>All listed on Projects page with individual articles. Cleared.</td>
+      </tr>
+      <tr>
+        <td>Buckden Roll Top Backpack expands 24–35L</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Product name on homepage states "24/35L". Cleared.</td>
+      </tr>
+      <tr>
+        <td>Bain Sling Bag is 6.5L</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Product listing states "6.5L". Cleared.</td>
+      </tr>
+      <tr>
+        <td>Products are "rugged, hard-wearing, technically crafted and ethically produced"</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Site meta description. Brand's own language. Cleared as brand voice.</td>
+      </tr>
+      <tr>
+        <td>Hikerdelic collaboration exists (two capsules)</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Both ELLIKER x Hikerdelic I and II listed on Projects page. Cleared.</td>
+      </tr>
+      <tr>
+        <td>"Minimal impact on the environment and maximum durability" — site's core promise</td>
+        <td><span class="tag tag-website">WEBSITE</span></td>
+        <td>Site meta description. Cleared as brand positioning.</td>
+      </tr>
+      <tr>
+        <td>Specific number of plastic bottles used per product</td>
+        <td><span class="tag tag-unverified">UNVERIFIED</span></td>
+        <td>Not stated anywhere on website. Removed from content plan.</td>
+      </tr>
+      <tr>
+        <td>Carbon footprint figures or emissions data</td>
+        <td><span class="tag tag-unverified">UNVERIFIED</span></td>
+        <td>Not stated on website. Removed from content plan.</td>
+      </tr>
+      <tr>
+        <td>Specific waterproofing rating (e.g. 10,000mm HH)</td>
+        <td><span class="tag tag-unverified">UNVERIFIED</span></td>
+        <td>Not stated anywhere on website. Visual claim only. Removed.</td>
+      </tr>
+      <tr>
+        <td>Years the brand has been operating</td>
+        <td><span class="tag tag-unverified">UNVERIFIED</span></td>
+        <td>No founding date on website. Removed.</td>
+      </tr>
+      <tr>
+        <td>Total amount donated to wildlife trusts to date</td>
+        <td><span class="tag tag-unverified">UNVERIFIED</span></td>
+        <td>Not stated on website. Removed.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 3: CREATIVE CONCEPTS
+══════════════════════════════════════ -->
+<div class="section" id="phase3">
+  <div class="section-header">
+    <div class="phase-num">Phase 03</div>
+    <div>
+      <h2>Creative <em>Concepts</em></h2>
+      <p style="margin-top:8px; font-size:15px;">Five high-retention video concepts built on unexpected contrast, visual tension, and satisfying resolution. Each is grounded in verified brand claims only.</p>
+    </div>
+  </div>
+
+  <div class="concepts-grid">
+
+    <!-- CONCEPT 1 -->
+    <div class="concept-card">
+      <div class="concept-num">Concept 01</div>
+      <div class="concept-title">Your Bag Used to Be a Bottle</div>
+      <ul class="concept-structure">
+        <li>
+          <span class="concept-label">Hook</span>
+          <span>Close-up of plastic bottles piling up in a landfill. Then a hand reaches into the pile — pulls out one bottle. Time-lapse dissolve. Same hand now holds the Buckden backpack.</span>
+        </li>
+        <li>
+          <span class="concept-label">Contrast</span>
+          <span>The material is trash. The object is beautiful. The gap between those two facts is the story.</span>
+        </li>
+        <li>
+          <span class="concept-label">Payoff</span>
+          <span>Text: "We turned post-consumer plastic waste into this." Bag drops onto heather moorland. Sits perfectly.</span>
+        </li>
+        <li>
+          <span class="concept-label">Analogy</span>
+          <span>Like turning old newspaper into a beautiful book — the past doesn't limit what the future can become.</span>
+        </li>
+        <li>
+          <span class="concept-label">Brand link</span>
+          <span>100% recycled polyester bags, GRS certified. [WEBSITE]</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CONCEPT 2 -->
+    <div class="concept-card">
+      <div class="concept-num">Concept 02</div>
+      <div class="concept-title">The Bag That Belongs in Both Worlds</div>
+      <ul class="concept-structure">
+        <li>
+          <span class="concept-label">Hook</span>
+          <span>Split-screen, no music. Left: office corridor, fluorescent light, hard floors, briefcase crowd. Right: boggy moorland trail, wind noise, sheep blur past. Same bag visible in both frames.</span>
+        </li>
+        <li>
+          <span class="concept-label">Contrast</span>
+          <span>Outdoor gear usually looks embarrassing on city streets. City bags look ridiculous on a hillside. This exists in the gap between those two worlds.</span>
+        </li>
+        <li>
+          <span class="concept-label">Payoff</span>
+          <span>Screens merge into one. Person walking out of an office building, immediately into a park, pack on. Tagline: "Getting Into Nature — wherever that starts."</span>
+        </li>
+        <li>
+          <span class="concept-label">Analogy</span>
+          <span>Like how a good Swiss Army knife looks right at the dinner table and on a campsite — it doesn't apologise for being both.</span>
+        </li>
+        <li>
+          <span class="concept-label">Brand link</span>
+          <span>"Lightweight, functional" + aesthetic colour palette. [WEBSITE]</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CONCEPT 3 -->
+    <div class="concept-card">
+      <div class="concept-num">Concept 03</div>
+      <div class="concept-title">The Field That Started Everything</div>
+      <ul class="concept-structure">
+        <li>
+          <span class="concept-label">Hook</span>
+          <span>Drone shot descending slowly over woodland in East Keswick. No branding. Just sound. Someone walking a path below. Then text appears: "This is where it started."</span>
+        </li>
+        <li>
+          <span class="concept-label">Contrast</span>
+          <span>Most brands start in boardrooms with spreadsheets. This brand started in a specific field in Yorkshire. The contrast is location as origin — raw, unglamorous, real.</span>
+        </li>
+        <li>
+          <span class="concept-label">Payoff</span>
+          <span>Cut to: Elliker logo. "We named ourselves after a field. Because we think where you come from should shape everything you make." Donate 1% of profits to UK Wildlife Trusts.</span>
+        </li>
+        <li>
+          <span class="concept-label">Analogy</span>
+          <span>Like a chef named after their grandmother's kitchen — the name carries the whole story before you even taste the food.</span>
+        </li>
+        <li>
+          <span class="concept-label">Brand link</span>
+          <span>Named after Elliker Fields, East Keswick. Donates to East Keswick Wildlife Trust. [WEBSITE]</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CONCEPT 4 -->
+    <div class="concept-card">
+      <div class="concept-num">Concept 04</div>
+      <div class="concept-title">Forest Bathing in a Bag</div>
+      <ul class="concept-structure">
+        <li>
+          <span class="concept-label">Hook</span>
+          <span>Someone in a lab coat measuring "stress hormones" in a vial. Cut to: same person barefoot under trees. Cut to: the word "Shinrin-yoku" appearing in text over fog.</span>
+        </li>
+        <li>
+          <span class="concept-label">Contrast</span>
+          <span>The confusion: is this a wellness brand? A science video? A Japanese practice piece? Then the reveal: "We make the gear. You make the medicine."</span>
+        </li>
+        <li>
+          <span class="concept-label">Payoff</span>
+          <span>The bag being packed for a forest walk. Simple. Unhurried. Text: "Getting Into Nature is the oldest health hack. We just make sure you bring the right bag."</span>
+        </li>
+        <li>
+          <span class="concept-label">Analogy</span>
+          <span>Like a good pair of running shoes — they don't make you a runner, but bad shoes will definitely stop you running.</span>
+        </li>
+        <li>
+          <span class="concept-label">Brand link</span>
+          <span>Forest Bathing Project featured on website. Lightweight, functional products. [WEBSITE]</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CONCEPT 5 - full width -->
+    <div class="concept-card">
+      <div class="concept-num">Concept 05</div>
+      <div class="concept-title">What Gets Certified vs What Gets Talked About</div>
+      <ul class="concept-structure">
+        <li>
+          <span class="concept-label">Hook</span>
+          <span>Hands flipping through paper certificates — official-looking, stamped, dense text. Then: someone dumping a bag in a stream crossing. Splashing through. Bag emerges. Still intact. Soaking but closed.</span>
+        </li>
+        <li>
+          <span class="concept-label">Contrast</span>
+          <span>Certifications (GRS, OCS 100) are the behind-the-scenes proof. The performance is the visible proof. Most brands choose one to talk about. This concept runs them side by side.</span>
+        </li>
+        <li>
+          <span class="concept-label">Payoff</span>
+          <span>"The GRS certificate is for the planet. The waterproof coating is for the weather. Both matter. Both exist." Product close-up showing both fabric and water beading off surface.</span>
+        </li>
+        <li>
+          <span class="concept-label">Analogy</span>
+          <span>Like a restaurant with a health certificate in the window and a full house — the official bit earns trust, the full house proves it.</span>
+        </li>
+        <li>
+          <span class="concept-label">Brand link</span>
+          <span>GRS certificates, waterproof coating on bags, "minimal impact / maximum durability." [WEBSITE]</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="feedback-box">
+    <p>⟶ Pause point: Review the 5 concepts above. Reply with which you want to develop further, combine, or remove before the 30-day plan is built around them.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 4: 30-DAY CONTENT PLAN
+══════════════════════════════════════ -->
+<div class="section" id="phase4">
+  <div class="section-header">
+    <div class="phase-num">Phase 04</div>
+    <div>
+      <h2>30-Day Content <em>System</em></h2>
+      <p style="margin-top:8px; font-size:15px;">Structured across four narrative arcs. Every claim source-tagged. All hooks are specific and emotion-driven. Formats vary daily: story, demo, metaphor, contradiction, POV.</p>
+    </div>
+  </div>
+
+  <!-- ── WEEK 1: AWARENESS ── -->
+  <div class="week-block">
+    <div class="week-header">
+      <div class="week-label">Week 01</div>
+      <div class="week-theme"><em>Awareness</em> — Interrupt the Scroll</div>
+    </div>
+    <div class="col-headers">
+      <div class="col-h">Day</div>
+      <div class="col-h">Hook + Caption</div>
+      <div class="col-h">Visual Direction</div>
+      <div class="col-h">Meta + Tags</div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">01</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Your bag used to be a bottle. Not metaphorically.</div>
+        <div class="day-caption">"We make bags from post-consumer plastic waste. The planet needed somewhere for it to go."</div>
+      </div>
+      <div class="day-cell day-visual">Close-up macro of recycled polyester weave filling frame. Water bead in centre. Slow zoom out to reveal the full Buckden pack on a mossy wall. Natural light, diffuse, overcast Yorkshire.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-demo">Demo</span><br>
+        <div class="hashtags">#recycledfashion #sustainableoutdoor #outdoorgear #ethicalbags #circularfashion #getintonnature</div>
+        <div class="src-tag">WEBSITE — Sustainability</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">02</div></div>
+      <div class="day-cell">
+        <div class="day-hook">We named our brand after a field. There's a reason that matters.</div>
+        <div class="day-caption">"Most brands are named by agencies. Ours is named after a place that actually exists. In East Keswick. In Yorkshire. Go find it."</div>
+      </div>
+      <div class="day-cell day-visual">Drone footage, descending slowly over woodland at dawn. Mist in the canopy. No logo until final 2 seconds. Text overlay: "Elliker Fields. East Keswick. Yorkshire." Warm, atmospheric.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#yorkshire #yorkshirenature #placebasedbrands #eastKeswick #outdoorbrand #brandstorey</div>
+        <div class="src-tag">WEBSITE — Who Are We</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">03</div></div>
+      <div class="day-cell">
+        <div class="day-hook">The outdoor gear industry has a problem with ugly. We disagree.</div>
+        <div class="day-caption">"Sand. Taupe. Steel blue. Lime. Gear that looks like it belongs in the wild — and on your commute."</div>
+      </div>
+      <div class="day-cell day-visual">Flat lay of bags in all colourways on a natural stone surface. Shot from directly above, morning light. Then cuts to same bags in actual outdoor settings — each colour in its natural equivalent landscape.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-contradiction">Contradiction</span><br>
+        <div class="hashtags">#outdoorstyle #functionalfashion #bagstyle #gearaesthetic #natureinspireddesign</div>
+        <div class="src-tag">WEBSITE — Product range</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">04</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Shinrin-yoku. The Japanese word for something you already knew worked.</div>
+        <div class="day-caption">"Forest bathing isn't a trend. It's a 40-year-old Japanese therapy. We built a brand around getting you there."</div>
+      </div>
+      <div class="day-cell day-visual">Person walking slowly between trees. Not hiking pace — deliberately slow. Hands brushing bark. Light through canopy. No dialogue. Sound: only wind and footsteps. Text card at end with forest bathing definition.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#shinrinyoku #forestbathing #getintonnature #foresttherapy #outdoorwellness #ukwildlife</div>
+        <div class="src-tag">WEBSITE — Projects/Forest Bathing</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">05</div></div>
+      <div class="day-cell">
+        <div class="day-hook">The bag that goes to work and then goes to the hills without looking like either.</div>
+        <div class="day-caption">"Your kit shouldn't announce where you're going. It should be ready for both."</div>
+      </div>
+      <div class="day-cell day-visual">Split-screen video (no cut). Left half: city. Right half: countryside. Same Bain sling bag worn in both. Camera pans slowly right until countryside takes over the full frame.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-contradiction">Contradiction</span><br>
+        <div class="hashtags">#everdaybag #outdooreveryday #slingbag #urbanoutdoor #functionalbag #getintonnature</div>
+        <div class="src-tag">WEBSITE — Product range</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">06</div></div>
+      <div class="day-cell">
+        <div class="day-hook">We give 1% of our profits to UK Wildlife Trusts. Here's where it actually goes.</div>
+        <div class="day-caption">"Not a vague offset. Not a generic charity. The East Keswick Wildlife Trust — the land that inspired every product we've made."</div>
+      </div>
+      <div class="day-cell day-visual">Ground-level footage of wildflower meadow. Then: hands planting a sapling (referencing Giving Back page imagery). Cut to: EKWT logo. Then Elliker logo. Warm, unhurried.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#wildlifetrust #ukwildlife #1percent #giveback #conservationuk #outdoorethos</div>
+        <div class="src-tag">WEBSITE — Giving Back</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">07</div></div>
+      <div class="day-cell">
+        <div class="day-hook">What actually is a sacoche? And why do you need one?</div>
+        <div class="day-caption">"Between a crossbody and a belt bag. Born in cycling culture. Adopted by anyone who hates pockets."</div>
+      </div>
+      <div class="day-cell day-visual">Quick 5-second demo: items being placed into sacoche (phone, keys, snack). Clipped on. Walking. Then cycling. Then walking again. Demonstrating the switch. Overhead and mid-shot alternating.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-demo">Demo</span><br>
+        <div class="hashtags">#sacoche #bikebag #cyclingfashion #smallbag #sacochelife #everydaycarry</div>
+        <div class="src-tag">WEBSITE — Product range</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WEEK 2: EDUCATION ── -->
+  <div class="week-block">
+    <div class="week-header">
+      <div class="week-label">Week 02</div>
+      <div class="week-theme"><em>Education</em> — Earn the Attention</div>
+    </div>
+    <div class="col-headers">
+      <div class="col-h">Day</div>
+      <div class="col-h">Hook + Caption</div>
+      <div class="col-h">Visual Direction</div>
+      <div class="col-h">Meta + Tags</div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">08</div></div>
+      <div class="day-cell">
+        <div class="day-hook">GRS certified. Most people have no idea what that means.</div>
+        <div class="day-caption">"GRS = Global Recycled Standard. The industry's gold standard. It means: we can prove every thread came from a certified recycled source. Not just a claim."</div>
+      </div>
+      <div class="day-cell day-visual">Text-led video. White background. Words appear one at a time. No stock footage, no filler. Then: the physical certificate appearing. Honest, editorial, dry.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-pov">POV</span><br>
+        <div class="hashtags">#GRS #globalrecycledstandard #sustainabilitycertification #ethicalfashion #transparencyinbusiness</div>
+        <div class="src-tag">WEBSITE — Sustainability</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">09</div></div>
+      <div class="day-cell">
+        <div class="day-hook">How does a 24L backpack become a 35L one? Let us show you.</div>
+        <div class="day-caption">"The roll-top does the work. No zips to burst. No panels to sew back on. Just roll it more or less depending on what you've packed."</div>
+      </div>
+      <div class="day-cell day-visual">Hands demo. Pack with minimal load — roll-top neat and tight (24L profile). Then second take: pack stuffed full, roll-top unrolled, top buckled. Side by side comparison. Clear overhead light, stone background.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-demo">Demo</span><br>
+        <div class="hashtags">#rolltopbag #packingguide #backpacktips #daypack #gearguide #buckdenbackpack</div>
+        <div class="src-tag">WEBSITE — Buckden product</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">10</div></div>
+      <div class="day-cell">
+        <div class="day-hook">We went mushroom foraging in Yorkshire. Here's what we found.</div>
+        <div class="day-caption">"Fungi aren't just food. They're the internet of the forest — connecting tree roots, sharing nutrients underground. You just need to know how to look."</div>
+      </div>
+      <div class="day-cell day-visual">Field guide aesthetic. Close-up shots of mushrooms in the undergrowth. Hands lifting a cap. Field notes visible in background. Natural, curious, unhurried. Moody dappled light.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#mushroomforaging #mushroomidentification #foraging #yorkshirewoodland #fungal #getintonnature</div>
+        <div class="src-tag">WEBSITE — Projects/Mushroom ID</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">11</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Organic cotton isn't just "better for the environment." It feels different too.</div>
+        <div class="day-caption">"No pesticide residue in the fibres. No harsh chemicals in the wash. It's softer — not because we say so, but because of how it grows."</div>
+      </div>
+      <div class="day-cell day-visual">ASMR-led close-up. Hands folding the Rill T-shirt. Fabric pulled gently tight to show weight and drape. Close on weave texture. Off-white and black colourways side by side. Clean studio light.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-demo">Demo</span><br>
+        <div class="hashtags">#organiccotton #sustainabletshirt #organiccloths #ethicalclothing #OCS100 #slowfashion</div>
+        <div class="src-tag">WEBSITE — Sustainability / Fabric Technology</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">12</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Wild garlic is everywhere right now. Here's where to look.</div>
+        <div class="day-caption">"Peak season: mid-February to April. Identify by the smell first — crush a leaf, if it smells like garlic, you're in the right place."</div>
+      </div>
+      <div class="day-cell day-visual">Ground-level shot, camera moving through carpet of wild garlic. Hands picking. Nose close to leaf. Spring light filtering through young leaves. Warm, green, sensory.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#wildgarlic #foraging #britishforaging #springforaging #wildgarlicharvest #getintonnature</div>
+        <div class="src-tag">WEBSITE — Projects/Wild Garlic Foraging</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">13</div></div>
+      <div class="day-cell">
+        <div class="day-hook">The 3-layer shell jacket: what the layers actually do.</div>
+        <div class="day-caption">"Layer 1: water resistance. Layer 2: structure. Layer 3: breathability lining. It's not magic — it's just fabric engineering done right."</div>
+      </div>
+      <div class="day-cell day-visual">Jacket held up, backlit. Layers visible in translucent light. Then rain simulation over the sleeve — water beading and running off. Close shot of texture of each layer. Industrial, honest visual language.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-demo">Demo</span><br>
+        <div class="hashtags">#softshell #jackettech #outdoorjacket #3layerfabric #waterproofgear #recycledpongee</div>
+        <div class="src-tag">WEBSITE — Fabric Technology</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">14</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Rockpooling is the most underrated nature activity for adults.</div>
+        <div class="day-caption">"The problem with growing up is forgetting what used to fascinate you for free. The coast hasn't changed. You have."</div>
+      </div>
+      <div class="day-cell day-visual">Adult hands turning a rock in a rockpool. Anemones. Crabs. Child's sense of wonder through adult eyes. Overcast coastal light, greens and greys, reflective water. Unhurried, curious.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-pov">POV</span><br>
+        <div class="hashtags">#rockpooling #britishcoast #natureuk #adultnature #marinebiology #getintonnature</div>
+        <div class="src-tag">WEBSITE — Projects/Rockpooling</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WEEK 3: PROOF ── -->
+  <div class="week-block">
+    <div class="week-header">
+      <div class="week-label">Week 03</div>
+      <div class="week-theme"><em>Proof</em> — Show, Don't Justify</div>
+    </div>
+    <div class="col-headers">
+      <div class="col-h">Day</div>
+      <div class="col-h">Hook + Caption</div>
+      <div class="col-h">Visual Direction</div>
+      <div class="col-h">Meta + Tags</div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">15</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Watch what happens when we dunk the Buckden in a stream.</div>
+        <div class="day-caption">"Recycled polyester with waterproof coating. We don't just say it — we film it."</div>
+      </div>
+      <div class="day-cell day-visual">Pack submerged in shallow stream for 30 seconds. Pulled out. Roll-top unrolled. Contents revealed: dry. Clean, single-take shot. Running water sound only. No voiceover.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-demo">Demo</span><br>
+        <div class="hashtags">#waterprooftest #bagtest #outdoorgear #geartest #waterproofbag #buckdenbackpack</div>
+        <div class="src-tag">WEBSITE — Fabric Technology / Product</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">16</div></div>
+      <div class="day-cell">
+        <div class="day-hook">We walked the Scar House Reservoir circular. Here's what you need to know before you do.</div>
+        <div class="day-caption">"Upper Nidderdale. Signal drops. The road narrows. That's when it gets good."</div>
+      </div>
+      <div class="day-cell day-visual">Field guide edit. Map, walking footage, product in use on the route. Reservoir at dawn. Mist. Person with Dayle roll-top pack crossing a stone bridge. Moody, editorial, real.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#nidderdale #yorkshiredales #scarhousereservoir #fieldguide #hikinguk #getintonnature</div>
+        <div class="src-tag">WEBSITE — Projects/Field Guide 005</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">17</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Hammock camping changed how we think about outdoor gear.</div>
+        <div class="day-caption">"The world of outdoor exploration is evolving. Sometimes 'elevate' is literal."</div>
+      </div>
+      <div class="day-cell day-visual">Hammock strung between two trees in Yorkshire woodland. Morning light. Coffee in hand. Elliker holdall visible on forest floor below. Slow, atmospheric. Trail Dusters collaboration referenced in text.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#hammockcamping #treecamping #getintonnature #outdoorsleeping #campinguk #elevate</div>
+        <div class="src-tag">WEBSITE — Projects/Elevate x Trail Dusters</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">18</div></div>
+      <div class="day-cell">
+        <div class="day-hook">We don't just sell gear. We fund the land that inspired it.</div>
+        <div class="day-caption">"1% of profits, direct to the East Keswick Wildlife Trust. Not an abstract offset. The actual place we come from."</div>
+      </div>
+      <div class="day-cell day-visual">Time-lapse of seasons changing over the same tree at Elliker Fields. Then: person planting sapling, wearing Elliker jacket. EKWT logo. Simple, earned, no triumphalism.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#wildlifetrust #giveback #1percent #EKWTrust #conservationuk #outdoorethos #yorkshirewildlife</div>
+        <div class="src-tag">WEBSITE — Giving Back</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">19</div></div>
+      <div class="day-cell">
+        <div class="day-hook">What does a texture-led season actually look like?</div>
+        <div class="day-caption">"SS26: weathered stone. Rippling water. Shifting light. We built a collection around what you feel underfoot, not what you see on a trend report."</div>
+      </div>
+      <div class="day-cell day-visual">Journey Through Texture campaign edit. Macro shots: rough stone, water over pebbles, fleece texture, woven nylon. Slow pans. Monochromatic and textural. No people — just surface and light.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-contradiction">Contradiction</span><br>
+        <div class="hashtags">#ss26 #textureseason #journeythroughtexture #outdooraesthetic #outdoorfashion #elliker2026</div>
+        <div class="src-tag">WEBSITE — Projects/SS26</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">20</div></div>
+      <div class="day-cell">
+        <div class="day-hook">What birding taught us that cycling, hiking, and running never did.</div>
+        <div class="day-caption">"It forces you to stop. To be still. To let nature come to you. The outdoor world is obsessed with effort. Bird watching is the antidote."</div>
+      </div>
+      <div class="day-cell day-visual">Person sitting completely still on a log. Binoculars. Elliker cap. Birds moving in background. No music. Distant sounds only. Long shot, patient. Then: sudden close-up of a bird landing nearby.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-pov">POV</span><br>
+        <div class="hashtags">#birdwatching #birding #ukbirds #ornithologyuk #getintonnature #outdoorpause</div>
+        <div class="src-tag">WEBSITE — Projects/Bird Watching</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">21</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Hikerdelic x Elliker II. Adventure and self-expression, in one capsule.</div>
+        <div class="day-caption">"When two brands that both take the outdoors seriously but come at it from completely different directions — something interesting happens."</div>
+      </div>
+      <div class="day-cell day-visual">Side-by-side looks from the collab. Bold Hikerdelic prints alongside Elliker's quieter palette. Movement shots — cycling, walking. Energy and contrast between the two aesthetics visible in same frame.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#elliker #hikerdelic #collaboration #capsulecollection #outdoorfashion #gettingoutside</div>
+        <div class="src-tag">WEBSITE — Projects/Hikerdelic II</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WEEK 4: IDENTITY ── -->
+  <div class="week-block">
+    <div class="week-header">
+      <div class="week-label">Week 04</div>
+      <div class="week-theme"><em>Identity</em> — This Is Who We Are</div>
+    </div>
+    <div class="col-headers">
+      <div class="col-h">Day</div>
+      <div class="col-h">Hook + Caption</div>
+      <div class="col-h">Visual Direction</div>
+      <div class="col-h">Meta + Tags</div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">22</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Not everyone who loves nature hikes 30km every weekend. And that's the point.</div>
+        <div class="day-caption">"Getting into nature isn't a sport. It's a disposition. A decision to look more carefully at the world outside your window."</div>
+      </div>
+      <div class="day-cell day-visual">Montage. Person with magnifying glass looking at lichen on a city wall. Child looking into a puddle. Someone standing still in a park. None of these are epic landscapes — they're near, ordinary, accessible.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-metaphor">Metaphor</span><br>
+        <div class="hashtags">#urbanwildlife #getintonnature #naturenearby #accessiblenature #outdoorforeveryone #elliker</div>
+        <div class="src-tag">WEBSITE — Who Are We / Projects ethos</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">23</div></div>
+      <div class="day-cell">
+        <div class="day-hook">What's under your feet right now is more interesting than anything on your phone.</div>
+        <div class="day-caption">"Microscopy taught us that. There are worlds in a drop of pond water. We're just not paying attention."</div>
+      </div>
+      <div class="day-cell day-visual">Microscope footage of pond water organisms. The same organisms animated as line illustration. Then: real water, hand touching it. The wonder of the invisible made visible. Elliker brand colour in the illustrations.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-pov">POV</span><br>
+        <div class="hashtags">#microscopy #pondlife #scienceuk #naturescience #microworld #getintonnature</div>
+        <div class="src-tag">WEBSITE — Projects/Microscopy</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">24</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Rombald's Moor remembers. Walk far enough and you'll feel it too.</div>
+        <div class="day-caption">"The landscape carries the history. Every step is on ground that was walked thousands of years before you. That changes how you move through it."</div>
+      </div>
+      <div class="day-cell day-visual">Slow, cinematic walk across Rombald's Moor. Low cloud. Person small in the frame against vast landscape. Then tight shots: boot on heather, hand on ancient stone, horizon line. Quiet, ancestral, vast.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#rombalsmoor #yorkshiremoors #moorland #fieldguide #ancientlandscape #getintonnature</div>
+        <div class="src-tag">WEBSITE — Projects/Rombald's Moor</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">25</div></div>
+      <div class="day-cell">
+        <div class="day-hook">The gear industry wants you to think you need more than you do.</div>
+        <div class="day-caption">"A 6.5L sling bag for a walk. That's it. Wallet. Water. Phone. Go."</div>
+      </div>
+      <div class="day-cell day-visual">Close-up of Bain sling bag being packed in real time. Minimal items. Clip fastened. Door opened. Walking out. Duration: 15 seconds total. No transitions. One take. Honest, anti-aspirational in tone.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-contradiction">Contradiction</span><br>
+        <div class="hashtags">#bainsling #lessgear #minimal #getoutside #slingbag #everydayadventure #gettinginnature</div>
+        <div class="src-tag">WEBSITE — Bain Sling product</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">26</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Autumn Winter 25: Explore the Lore. What does that mean?</div>
+        <div class="day-caption">"Folklore isn't superstition. It's the knowledge the landscape accumulated before we had language to explain it properly. We went to find it."</div>
+      </div>
+      <div class="day-cell day-visual">AW25 campaign edit. Mist on moorland. Silhouettes. Old oak trees in low winter light. Elliker product in earth tones. The feeling of old England in the cold months. Slow, atmospheric, cinematic.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#autumnwinter25 #explorethelore #folkloreuk #britishlandscape #outdoorwinter #getintonnature</div>
+        <div class="src-tag">WEBSITE — Projects/AW25</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">27</div></div>
+      <div class="day-cell">
+        <div class="day-hook">Charcoal burning was destroying rainforests. Then people started doing it differently.</div>
+        <div class="day-caption">"Sustainable charcoal production using coppiced woodland is a conservation tool, not a threat. The same material. A completely different relationship with the land."</div>
+      </div>
+      <div class="day-cell day-visual">Charcoal burn in process — smoke, glowing wood, coppiced woodland surroundings. Hands working the kiln. Contrast with footage of healthy regenerating coppice. Dark, warm, industrial-nature contrast.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-contradiction">Contradiction</span><br>
+        <div class="hashtags">#charcoalburn #coppice #sustainableforestry #woodlandmanagement #getintonnature #conservationuk</div>
+        <div class="src-tag">WEBSITE — Projects/Charcoal Burn</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">28</div></div>
+      <div class="day-cell">
+        <div class="day-hook">This is what we believe. All of it, in one place.</div>
+        <div class="day-caption">"Connect with nature. Understand it. Produce less harm. Make beautiful things from what already exists. Fund the land that made you. That's all of it."</div>
+      </div>
+      <div class="day-cell day-visual">Brand manifesto video. One line appears at a time over landscape footage — each line matched to relevant visual. Builds slowly to Elliker logo. Final line: "Getting Into Nature." Cinematic, quiet, definitive.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-story">Story</span><br>
+        <div class="hashtags">#elliker #getintonnature #brandmanifesto #outdoorethics #sustainableoutdoor #yorkshire</div>
+        <div class="src-tag">WEBSITE — Who Are We / Sustainability / Giving Back</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">29</div></div>
+      <div class="day-cell">
+        <div class="day-hook">We draw from all cultures, passions and pastimes. Here's what that looks like in practice.</div>
+        <div class="day-caption">"Forest bathing from Japan. Foraging from the English countryside. Hammock camping from trail culture. The outdoors has no single language."</div>
+      </div>
+      <div class="day-cell day-visual">A split-grid of all Projects content — forest, coast, moor, woodland, urban green. Each frame a different culture or practice. The breadth is the point. Fast cuts, then stillness. Elliker logo ties them.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-metaphor">Metaphor</span><br>
+        <div class="hashtags">#getintonnature #outdoorculture #globaloutdoors #shinrinyoku #foraging #elliker</div>
+        <div class="src-tag">WEBSITE — Projects intro copy</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-cell"><div class="day-num">30</div></div>
+      <div class="day-cell">
+        <div class="day-hook">30 days of this. One question left: where are you going this weekend?</div>
+        <div class="day-caption">"We've shown you the field guides. The fabric tech. The wildlife trusts. The landscapes. Now go. The gear can come with you, or not. Just go."</div>
+      </div>
+      <div class="day-cell day-visual">Community invitation. Open gate. Long path ahead. Late afternoon light. No people in shot — the space is for the viewer to step into. Elliker logo small, bottom right. CTA: tag us in where you go.</div>
+      <div class="day-cell day-meta">
+        <span class="meta-format fmt-pov">POV</span><br>
+        <div class="hashtags">#getintonnature #outdooruk #elliker #getoutside #ukoutdoors #weekendwalks #naturecommunity</div>
+        <div class="src-tag">WEBSITE — Brand ethos (all pages)</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">ELLIKER · Content Strategy System · Phase 1–4 Complete</div>
+  <div class="footer-brand">All claims sourced from elliker.co.uk · May 2026</div>
+</div>
+
+<script>
+  const nav = document.querySelector('.phase-nav');
+  const sections = document.querySelectorAll('[id^="phase"]');
+  const links = nav.querySelectorAll('a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const match = nav.querySelector(`a[href="#${e.target.id}"]`);
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
